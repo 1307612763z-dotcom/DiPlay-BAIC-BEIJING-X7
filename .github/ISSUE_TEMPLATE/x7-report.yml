@@ -1,0 +1,97 @@
+name: BAIC X7 report
+description: A problem with the BAIC X7 build — instrument panel, microphone, audio channel, ADB or hotspot
+title: "[X7] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for testing this branch. Please read [docs/INSTALL-X7.md](https://github.com/1307612763z-dotcom/DiPlay-BAIC-X7/blob/baic-x7/docs/INSTALL-X7.md)
+        first — it covers the identity assets, the overlay permission and the four most common failures.
+
+        This branch only supports the Pateo `c3005h` head unit. Reports from other head units are
+        welcome, but say so in the fields below.
+
+  - type: input
+    id: head-unit
+    attributes:
+      label: Head-unit model and board
+      description: Output of `adb shell getprop ro.product.model` and `ro.product.device`
+      placeholder: C3005H-MX8Q / c3005h
+    validations:
+      required: true
+
+  - type: input
+    id: firmware
+    attributes:
+      label: Android version and car firmware
+      description: |
+        `adb shell getprop ro.build.version.release` plus the car software version from the head-unit
+        settings (the X7 shows something like 2.30.20240717112805.rc35.6.user.c3005h)
+      placeholder: Android 9 / 2.30.20240717112805.rc35.6.user.c3005h
+    validations:
+      required: true
+
+  - type: input
+    id: build
+    attributes:
+      label: Which build are you running
+      description: The commit you built from, or the APK you were given
+      placeholder: baic-x7 @ 77c727c / mobile-debug.apk from <source>
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Which part fails
+      multiple: true
+      options:
+        - Instrument panel shows nothing
+        - Panel shows the stock map instead of CarPlay
+        - Panel picture is cropped, scaled or in the wrong place
+        - App microphone (WeChat voice / dictation) is silent
+        - Media or navigation audio is wrong
+        - Car hotspot does not start
+        - ADB / setup script fails
+        - App crashes or will not start
+        - Something else
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps and expected result
+      description: What you did, what happened, and what you expected instead
+      placeholder: |
+        1. Installed with tools/setup-x7.ps1
+        2. Turned on the car hotspot, connected the iPhone
+        3. The panel still shows the stock navigation map
+    validations:
+      required: true
+
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Diagnostics
+      description: |
+        Attach or paste the output of these commands (as a file if long):
+        `adb shell dumpsys display`
+        `adb logcat -d -s DiPlay-Cluster`
+        `adb shell dumpsys window windows | grep -A3 DiPlay-cluster`
+        `adb shell screencap -d 1 -p /sdcard/d1.png` and pull the PNG
+      render: text
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I read docs/INSTALL-X7.md and tried its troubleshooting table
+          required: true
+        - label: The runtime identity assets are my own and are **not** attached to this issue
+          required: true
+        - label: I understand this branch is not affiliated with Apple, BAIC or Pateo
+          required: true

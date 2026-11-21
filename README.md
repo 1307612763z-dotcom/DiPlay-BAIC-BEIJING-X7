@@ -18,6 +18,10 @@ under [Changes against upstream](#changes-against-upstream).
 **Read [docs/BAIC_X7.md](docs/BAIC_X7.md)** for the measurements, the overlay approach, the
 microphone root cause, and the known limits.
 
+**New here? Start with [docs/INSTALL-X7.md](docs/INSTALL-X7.md)** — the owner-facing steps: identity
+assets, build, `tools/setup-x7.ps1`, and a troubleshooting table. Problems go to the
+[BAIC X7 issue form](.github/ISSUE_TEMPLATE/x7-report.yml).
+
 ## Status
 
 | Feature | State |

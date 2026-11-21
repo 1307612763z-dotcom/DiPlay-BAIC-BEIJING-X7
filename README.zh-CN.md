@@ -18,6 +18,10 @@
 完整的技术细节——显示拓扑、为什么不用 `Presentation`、麦克风根因、实测日志——见
 **[docs/BAIC_X7.md](docs/BAIC_X7.md)**。
 
+**第一次上手请先看 [docs/INSTALL-X7.md](docs/INSTALL-X7.md)**——车主视角的安装步骤：身份资产、
+编译、`tools/setup-x7.ps1` 一键设置、以及问题对照表。报问题请用
+[BAIC X7 issue 表单](.github/ISSUE_TEMPLATE/x7-report.yml)。
+
 ## 状态
 
 | 功能 | 状态 |
