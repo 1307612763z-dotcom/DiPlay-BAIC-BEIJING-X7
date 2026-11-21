@@ -1368,6 +1368,14 @@ open class CarPlayHostActivity : ComponentActivity() {
         }
         // Handed back after CarPlay left; the next cluster stream takes the cluster again.
         if (clusterReleasedWhileIdle) return
+        // BAIC X7 (Pateo c3005h): a Presentation cannot outrank the stock map's APPLICATION_OVERLAY,
+        // so the panel window is an overlay of DiPlay's own; its surface feeds the same alt stream.
+        if (PateoClusterRoute.available(this)) {
+            clusterLaunchGate.reset()
+            ClusterActivityOutput.stop(this)
+            PateoClusterRoute.ensure(this) { surface -> onClusterSurface(surface) }
+            return
+        }
         clusterSurface?.let { sink?.setSurface(SCREEN_TYPE_ALT, it) }
         if (AdbClusterRouter.enabled(this)) {
             ClusterActivityOutput.bind(this, taskId) { onClusterSurface(it) }
@@ -1520,6 +1528,7 @@ open class CarPlayHostActivity : ComponentActivity() {
     }
     private fun dismissClusterPresentation() {
         ClusterActivityOutput.stop(this)
+        PateoClusterRoute.dismiss()
         val presentations = (clusterLayers.values + listOfNotNull(clusterPresentation)).distinct()
         clusterLayers.clear()
         clusterPresentation = null
@@ -1586,6 +1595,17 @@ open class CarPlayHostActivity : ComponentActivity() {
                 MapMirrors.streamAspect = it.widthPixels.toDouble() / it.heightPixels
                 appendLog("Cluster activity: requesting stream 111 at ${it.widthPixels}x${it.heightPixels}; safeArea=${it.safeArea} drawOutside=${it.safeAreaDrawOutside}; ADB task routing")
             }
+        }
+        // BAIC X7 (Pateo c3005h): the panel is a 1920x720 presentation display that the car crops to
+        // its centre 768x720 strip, and no BYD/Geely/DiLink 4 matcher applies. Ask for the strip.
+        PateoClusterRoute.streamConfig(this)?.let { config ->
+            clusterStreamOnDisplay = true
+            MapMirrors.streamAspect = config.widthPixels.toDouble() / config.heightPixels
+            appendLog(
+                "Cluster map: Pateo panel ${PateoClusterGeometry.DISPLAY_WIDTH}x${PateoClusterGeometry.DISPLAY_HEIGHT}; " +
+                    "stream ${config.widthPixels}x${config.heightPixels}",
+            )
+            return config
         }
         val theme = effectiveClusterTheme()
         if (DiLink51ClusterLayout.supported()) {

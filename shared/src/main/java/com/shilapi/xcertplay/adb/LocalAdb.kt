@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 class LocalAdb(
     private val key: KeyPair,
     private val host: String = "127.0.0.1",
-    private val port: Int = 5555,
+    private val port: Int = localAdbPort(),
 ) : Closeable {
     enum class Access { READY, NOT_APPROVED, UNREACHABLE, UNSUPPORTED }
 
@@ -281,4 +281,25 @@ internal class InteractiveResponseBuffer {
         if (text == "done\n" || text.endsWith("\ndone\n")) complete = true
     }
     fun text(): String = bytes.toString("UTF-8").removeSuffix("done\n").trimEnd('\n', '\r')
+}
+
+/**
+ * The port the head unit's own adbd listens on.
+ *
+ * Android's default is 5555, but vendor builds sometimes ship another `persist.adb.tcp.port` — the
+ * Pateo unit in the BAIC X7 uses 5578 — and an app cannot change a persist property. Read the
+ * runtime and persisted values, then fall back to the Android default so every other head unit keeps
+ * the old behaviour.
+ */
+internal fun localAdbPort(): Int {
+    val values: List<String> = runCatching {
+        val systemProperties = Class.forName("android.os.SystemProperties")
+        val get = systemProperties.getMethod("get", String::class.java, String::class.java)
+        listOf("service.adb.tcp.port", "persist.adb.tcp.port").map { name ->
+            (get.invoke(null, name, "") as? String).orEmpty()
+        }
+    }.getOrDefault(emptyList())
+    return values.firstNotNullOfOrNull { value ->
+        value.trim().toIntOrNull()?.takeIf { it in 1..65535 }
+    } ?: 5555
 }

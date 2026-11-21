@@ -291,8 +291,18 @@ object AirPlayPersistence {
 
     fun loadMediaAudioChannel(context: Context): Int =
         context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
-            .getInt(KEY_MEDIA_AUDIO_CHANNEL, 0)
+            .getInt(KEY_MEDIA_AUDIO_CHANNEL, defaultMediaAudioChannel())
             .takeIf { it in AUDIO_CHANNELS } ?: 0
+
+    /**
+     * The audio channel media plays on when the driver has not chosen one.
+     *
+     * On the BAIC X7 (Pateo `c3005h`) only the vendor's channel 4 carries media cleanly; the other
+     * channels clip, mute or play on the wrong speaker, measured on the car on 2026-11-21. Every
+     * other head unit keeps 0, the automatic choice.
+     */
+    private fun defaultMediaAudioChannel(): Int =
+        if (com.shilapi.xcertplay.network.PateoHeadUnit.detected) 4 else 0
 
     fun saveMediaAudioChannel(context: Context, channel: Int) {
         context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit()

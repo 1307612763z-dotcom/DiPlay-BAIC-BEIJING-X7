@@ -87,8 +87,13 @@ internal class MicrophoneUplink(
             )
             // The Geely/Lynk head unit only opens the microphone for the voice-communication
             // source; its voice-recognition source records silence, so Siri never hears.
+            // The Pateo unit in the BAIC X7 does the same: VOICE_RECOGNITION routes to the built-in
+            // mic (routedDeviceType=15) but every read returns zero bytes, so WeChat voice messages
+            // and iOS dictation stay silent. Measured there 2026-11-21.
             config.audioType == "speechrecognition" ->
-                if (com.shilapi.xcertplay.network.GeelyHeadUnit.detected) {
+                if (com.shilapi.xcertplay.network.GeelyHeadUnit.detected ||
+                    com.shilapi.xcertplay.network.PateoHeadUnit.detected
+                ) {
                     MediaRecorder.AudioSource.VOICE_COMMUNICATION
                 } else {
                     MediaRecorder.AudioSource.VOICE_RECOGNITION

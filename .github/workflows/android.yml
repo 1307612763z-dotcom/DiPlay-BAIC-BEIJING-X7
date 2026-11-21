@@ -22,6 +22,11 @@ jobs:
         with:
           packages: platform-tools platforms;android-37.0 build-tools;36.0.0 ndk;28.2.13676358
       - uses: gradle/actions/setup-gradle@v4
+      # The repository was published from Windows, where git records gradlew without the
+      # executable bit (mode 100644). Without this, ./gradlew fails with "Permission denied"
+      # before Gradle even starts.
+      - name: Make the Gradle wrapper executable
+        run: chmod +x gradlew
       - name: Unit tests, lint and source-only debug build
         run: ./gradlew :shared:testDebugUnitTest :common:testDebugUnitTest :home:testDebugUnitTest :mobile:lintDebug :home:lintDebug :maphost:lintDebug :mobile:assembleDebug :home:assembleDebug :maphost:assembleDebug --stacktrace
       - name: Test reports
