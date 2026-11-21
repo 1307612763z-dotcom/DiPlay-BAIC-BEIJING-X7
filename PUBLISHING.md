@@ -1,59 +1,90 @@
-# 鍙戝竷璇存槑锛圖iPlay-BAIC-X7锛?
-鏈洰褰曟槸鍙洿鎺?`git init` 骞舵帹閫佸埌 GitHub 鐨勫共鍑€鍒嗘敮銆傛帹閫佸墠璇风‘璁や互涓嬫竻鍗曘€?
-## 涓€銆佺粷瀵逛笉瑕佹彁浜?
-| 璺緞 / 鏂囦欢 | 鍘熷洜 |
+# 发布说明（DiPlay · 北汽/北京 X7）
+
+本目录是可直接推送的干净分支。推送前请确认以下清单。
+
+## 一、绝对不要提交
+
+| 路径 / 文件 | 原因 |
 |---|---|
-| `runtime-assets/offline-mfi/identity.pk8`銆乣certificate.p7b` | CarPlay 閰嶄欢韬唤涓庣閽ワ紝娉勯湶鍗崇瓑浜庡叕寮€瀵嗛挜 |
-| `*.apk`锛堝畼鏂瑰寘銆佸巶鍟嗗寘銆佹瀯寤轰骇鐗╋級 | 绗笁鏂逛笓鏈夎蒋浠讹紝涓嶅緱鍐嶅垎鍙?|
-| `local.properties` | 鏈満 SDK 璺緞 |
-| `build/`銆乣.gradle/`銆乣.idea/` | 鏋勫缓浜х墿/IDE 閰嶇疆 |
-| 鍚溅鐗屻€佸畾浣嶃€佷綇鍧€鐨勬埅鍥?| 闅愮锛屼笖鍦板浘鎴浘浼氭毚闇插父鍘诲湴鐐?|
+| `runtime-assets/offline-mfi/identity.pk8`、`certificate.p7b` | CarPlay 配件身份与私钥，泄露即等于公开密钥 |
+| `*.apk`（官方包、厂商包、构建产物） | 第三方专有软件，不得再分发 |
+| `local.properties` | 本机 SDK 路径 |
+| `build/`、`.gradle/`、`.idea/` | 构建产物 / IDE 配置 |
+| 含车牌、定位、住址的截图 | 隐私，且地图截图会暴露常去地点 |
 
-鏈洰褰曞凡鎺掗櫎涓婅堪鍐呭锛涜嫢浣犺嚜宸辫ˉ鍥撅紝璇峰厛鎵撶爜銆?
-## 浜屻€佽鍙瘉
+本仓库已排除上述内容；若你自己补图，请先打码。
 
-涓婃父 DiPlay 涓?**GPL-3.0**銆傛湰鍒嗘敮鏄鐢熶綔鍝侊紝蹇呴』锛?
-- 淇濇寔 GPL-3.0锛堜繚鐣?`LICENSE` 涓?`docs/THIRD_PARTY_NOTICES.md`锛?- 鍦?README 娉ㄦ槑鍩轰簬 DiPlay 鐨勫摢涓彁浜?- 涓嶅０绉颁笌 Apple / 姣斾簹杩?/ 鍗氭嘲 / 鍖楁苯鏈変换浣曞叧鑱旀垨璁よ瘉
+## 二、许可证
 
-## 涓夈€佹帹閫佸懡浠?
-```bash
-cd DiPlay-BAIC-X7
-git init
-git branch -M baic-x7
-git add .
-git commit -m "BAIC X7: CarPlay on the instrument panel, app microphone, local ADB port"
+上游 DiPlay 为 **GPL-3.0**。本分支是衍生作品，必须：
 
-# 鍏堝湪 GitHub 涓婂垱寤轰竴涓┖浠撳簱锛堜笉瑕佸嬀閫夊垵濮嬪寲 README锛?git remote add origin git@github.com:<浣犵殑璐﹀彿>/DiPlay-BAIC-X7.git
-git push -u origin baic-x7
+- 保持 GPL-3.0（保留 `LICENSE` 与 `docs/THIRD_PARTY_NOTICES.md`）
+- 在 README 注明基于 DiPlay 的哪个提交（当前：`615b32ce`）
+- 不声称与 Apple / 比亚迪 / 博泰 / 北汽有任何关联或认证
+
+## 三、两个仓库
+
+| 仓库 | 类型 | 作用 |
+|---|---|---|
+| `DiPlay-BAIC-BEIJING-X7` | fork of `shihabal3amri/DiPlay` | 开发主仓；与上游共享 git 历史，可 `fetch upstream`、可提 PR |
+| `DiPlay-BEIJING-X7` | 普通仓库（非 fork） | **搜索入口**。GitHub 仓库搜索默认排除 fork（需 `fork:true` 才含），镜像仓让默认搜索能命中；内容与 fork 的 `baic-x7` 分支一致，推成 `main` |
+
+同步命令：
+
+```powershell
+tools\sync-mirror.ps1                       # 已提交时
+tools\sync-mirror.ps1 -Message "fix: xxx"   # 顺手提交
 ```
 
-寤鸿鍚屾椂鎵撲竴涓?tag锛歚git tag v0.2.22-baic-x7.1 && git push --tags`銆?
-## 鍥涖€佷粨搴撹缃缓璁?
-- 鎻忚堪锛歚DiPlay fork for the BAIC X7 (Pateo c3005h): CarPlay on the instrument panel`
-- 鍦?README 椤堕儴鍔犱竴鍙ワ紝鎸囧悜 `docs/BAIC_X7.md`锛屽苟娉ㄦ槑涓婃父鍙敮鎸佹瘮浜氳开
-- 寮€鍚?Issues锛屾ā鏉挎部鐢ㄤ笂娓?- 涓嶈寮€鍚?Actions 鑷姩鍙戝竷 APK锛堜細娑夊強绛惧悕涓庤韩浠借祫浜э級
-
-## 浜斻€佷笌涓婃父鍚屾
+等价的手工命令：
 
 ```bash
-git remote add upstream https://github.com/shihabal3amri/DiPlay.git
+git push origin baic-x7
+git push mirror baic-x7:main
+```
+
+> 镜像仓库里有同一份 `.github/workflows/android.yml`，每次同步都会跑一遍完整 CI。
+> 不想浪费额度就在镜像仓库 Settings → Actions 里设为 Disabled——它只承担搜索入口的职责。
+
+## 四、与上游同步
+
+```bash
 git fetch upstream
-git merge upstream/main   # 鎴?rebase锛屾寜浣犵殑涔犳儻
+git merge upstream/main      # 或 rebase，按你的习惯
 ```
 
-鍐茬獊楂樺彂鏂囦欢锛歚CarPlayHostActivity.kt`銆乣MicrophoneUplink.kt`銆乣LocalAdb.kt`銆?
-## 鍏€佸彂甯冨墠鑷
+冲突高发文件（都是我们改过的）：
+
+- `CarPlayHostActivity.kt`
+- `AirPlayPersistence.kt`
+- `MicrophoneUplink.kt`
+- `LocalAdb.kt`
+- `README.md`、`.github/workflows/android.yml`
+
+如果冲突太难解，另一条路是"重放补丁"：重新下载上游源码，再把本分支这几个文件的改动搬过去。
+
+## 五、仓库设置建议
+
+- Topics：`carplay` `android-headunit` `baic` `beijingx7` `pateo` `diplay`
+- Description 建议单行、中英之间用 `·` 分隔，避免粘连
+- 默认分支：fork 用 `baic-x7`；镜像用 `main`（推送即默认）
+- 不要开启 Actions 自动发布 APK（涉及签名与身份资产）
+
+## 六、发布前自检
 
 ```bash
-# 1. 纭娌℃湁韬唤璧勪骇
-git ls-files | grep -Ei 'pk8|p7b|\.apk$|local\.properties' && echo "!! 闇€瑕佺Щ闄? || echo "clean"
+# 1. 确认没有身份资产
+git ls-files | grep -Ei 'pk8|p7b|\.apk$|local\.properties' && echo "!! needs removal" || echo "clean"
 
-# 2. 纭鎴戜滑鐨勬敼鍔ㄥ湪
+# 2. 确认我们的改动在
 git ls-files | grep -Ei 'PateoClusterRoute|PateoClusterGeometry|PateoHeadUnit|BAIC_X7'
 
-# 3. 缂栬瘧锛堥渶 JDK 25 + SDK 37锛?DIPLAY_AUTH_ASSETS_DIR=/path/to/runtime-assets ./gradlew :mobile:assembleStandaloneDebug
+# 3. 编译（需 JDK 25 + SDK 37 + NDK 28.2）
+DIPLAY_AUTH_ASSETS_DIR=/path/to/runtime-assets ./gradlew :mobile:assembleStandaloneDebug
 
-# 4. 鍗曟祴锛圓GENTS.md 瑕佹眰锛?./gradlew :shared:testDebugUnitTest :common:testDebugUnitTest
+# 4. 单测（AGENTS.md 要求）
+./gradlew :shared:testDebugUnitTest :common:testDebugUnitTest
 ```
 
-绗?4 姝ュ湪鏈満鏃犳硶鎵ц锛圡aven Central 鍩熷悕瑙ｆ瀽澶辫触锛夛紝璇峰湪鏈湴鎴?CI 涓婅窇閫氬悗鍐嶅彂甯冦€?
+第 4 步在本地开发机上可能因网络跑不通，但 CI（`.github/workflows/android.yml`）会执行同一组任务，
+推送后看 Actions 结果即可。
