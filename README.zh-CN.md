@@ -60,6 +60,14 @@ chmod +x gradlew                  # 仓库从 Windows 发布，git 丢了可执�
 - `tools/measure_cluster_rect.py` —— 从 `screencap -d 1` 截图量出仪表可见矩形
   （`--mode FULL_MAP` 会直接打印 Kotlin 片段）。
 
+## 鸣谢
+
+本分支的北汽 X7 支持在 AI 协助下完成：代码改动、实车测量与排查由
+**DeepSeek Harness（`deepseek-flash`）** 通过 ADB 连车完成，方向由车主决定。每一项修复都由车主
+在车上实测确认——仪表画面、微信语音、iOS 听写与音频通道表现。
+
+DiPlay 上游项目由 [shihabal3amri](https://github.com/shihabal3amri) 及其贡献者编写。
+
 ## 许可
 
 GPL-3.0，继承自 DiPlay。CarPlay 是 Apple Inc. 的商标，本项目与 Apple、比亚迪、博泰、北汽均无隶属关系。

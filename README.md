@@ -65,6 +65,15 @@ DiPlay's own README (BYD scope, build and release procedure) is archived at
 [`docs/DIPLAY-README.md`](docs/DIPLAY-README.md); the older xcertplay readme that upstream keeps in
 `docs/` is unchanged.
 
+## Credits
+
+The BAIC X7 support in this branch was developed with AI assistance: **DeepSeek Harness
+(`deepseek-flash`)** wrote the code changes and ran the on-car measurements and debugging over ADB,
+at the vehicle owner's direction. The owner confirmed every fix on the car — the panel picture,
+WeChat voice messages, iOS dictation and the audio channel behaviour.
+
+DiPlay itself is by [shihabal3amri](https://github.com/shihabal3amri) and its contributors.
+
 ## Licence
 
 GPL-3.0, inherited from DiPlay. CarPlay is a trademark of Apple Inc.; no affiliation is implied.
