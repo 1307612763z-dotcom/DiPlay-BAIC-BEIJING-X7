@@ -5,7 +5,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for testing this branch. Please read [docs/INSTALL-X7.md](https://github.com/1307612763z-dotcom/DiPlay-BAIC-X7/blob/baic-x7/docs/INSTALL-X7.md)
+        Thanks for testing this branch. Please read [docs/INSTALL-X7.md](https://github.com/1307612763z-dotcom/DiPlay-BAIC-BEIJING-X7/blob/baic-x7/docs/INSTALL-X7.md)
         first — it covers the identity assets, the overlay permission and the four most common failures.
 
         This branch only supports the Pateo `c3005h` head unit. Reports from other head units are
