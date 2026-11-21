@@ -9,6 +9,10 @@ Fork of [DiPlay](https://github.com/shihabal3amri/DiPlay) (GPL-3.0) that adds su
 - **App microphone works** through CarPlay: WeChat voice messages and iOS dictation
 - Local ADB uses the port the head unit actually listens on (this unit: 5578, not 5555)
 
+**Keywords:** BAIC X7 · BEIJING X7 · Beijing X7 · X7 head unit · instrument cluster CarPlay ·
+WeChat voice messages · iOS dictation · Pateo c3005h · DiPlay fork — 北汽X7、北京X7、车机、
+仪表盘投屏、微信语音、语音转文字.
+
 Upstream DiPlay targets BYD cars only, so this work lives here instead of in the main repository.
 
 Based on upstream commit `615b32ce` (2026-10-28, the tip of DiPlay `main` at the time of writing).
